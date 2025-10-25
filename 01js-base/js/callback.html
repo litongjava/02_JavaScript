@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<script type="text/javascript">
+function a() {
+  alert('hello!');
+}
+
+function b(callback) {
+  callback();
+}
+
+function c(callback) {
+  callback.call();
+}
+
+function test() {
+  b(a);
+  c(a);
+}
+</script>
+
+<body>
+</body>
+
+</html>

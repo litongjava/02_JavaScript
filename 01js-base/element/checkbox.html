@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	  <input type="checkbox" id="check1" value="123"/>
+	  <input type="button" onclick="check()" />
+	</body>
+	<script>
+	  function check(){
+	    var check=document.getElementById("check1")
+	    if(check.checked){
+	      console.log("状态:选中");
+	      console.log(check.value)
+	    }else{
+	      console.log("状态:没有选中")
+	    }
+	  }
+	</script>
+</html>

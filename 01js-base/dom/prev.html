@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script type="text/javascript">
+function getNextSibilingsNode(ele) {
+  var parent = ele.parentNode; //获取元素父元素
+  var childrens = parent.childNodes; //获取兄弟元素
+  for(var i = 0; i < childrens.length; i++) {
+    debugger;
+    if(childrens[i].nodeType == 1 && childrens[i] == ele) {
+      if(childrens[i + 1].nodeType == 1) { //如果如果两个元素之间没有文本节点，获取下一个节点。
+        return childrens[i + 1];
+      }
+      if(childrens[i + 2].nodeType == 1) { //如果如果两个元素之间有文本节点，先后获取2个节点
+        return childrens[i + 2];
+      } else {
+        throw error("传入的元素出错，请检查，可能这是最后一个元素,或者元素间包含多个空行");
+      }
+    }
+  }
+}
+
+function getPrevSibilingsNode(ele) {
+  var parsent = ele.parentNode;
+  var childrens = parsent.childNodes;
+  for(var i = 0; i < childrens.length; i++) {
+    if(childrens[i].nodeType == 1 && childrens[i] == ele) {
+      if(childrens[i - 1].nodeType == 1) {
+        return childrens[i - 1];
+      }
+      if(childrens[i - 2].nodeType == 1) { //跳过文本节点，所以i+2
+        return childrens[i - 2];
+      } else {
+        throw error("传入的元素出错，请检查，可能这是最后一个元素,或者元素间包含多个空行);
+      }
+    }
+  }
+}
+</script>
+</head>
+
+<body>
+<ul>1</ul>
+<ul class="li2">2</ul>
+<ul>3</ul>
+</body>
+
+</html>

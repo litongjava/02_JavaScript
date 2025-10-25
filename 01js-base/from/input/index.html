@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+
+<body>
+<input type="text" name="username" value="litong" />
+<input type="text" name="password" value="00000000" />
+<input type="button" onclick="change('username')">
+<input type="button" onclick="change('password')">
+</body>
+<script>
+function change(name) {
+  var input = document.getElementsByName(name)[0];
+  if(input.setSelectionRange) {
+    input.focus();
+    input.setSelectionRange(0, input.value.length);
+  } else if(ctrl.createTextRange) { //兼容IE 浏览器
+    var range = ctrl.createTextRange();
+    range.collapse(true);
+    range.moveStart('character', input.value.length);
+    range.moveEnd('character', 0);
+    range.select();
+  }
+}
+</script>
+
+</html>

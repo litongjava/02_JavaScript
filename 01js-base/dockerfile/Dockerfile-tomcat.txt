@@ -1,0 +1,2 @@
+From openjdk:8-jre
+ENV CATALINE_HOME /usr/local/tomcat

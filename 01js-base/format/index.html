@@ -1,0 +1,34 @@
+<div class="api-title" style="position: relative">
+  <div style="background: url('images/${head_logo}.jpg') no-repeat; position: absolute; left: 0; top: 0; width: 135px; height: 31px;"></div>
+  <div style="color: #fff; font-family: '<%=I18nUtil.t(" uni.font ") %>'; font-size: 16px; font-weight: bold; margin: 2px 0 0 35px;">
+    <%=((PropertyPlaceholderRecorder) springContext.getBean(PropertyPlaceholderRecorder.class)).getProperty("systemName")%>
+    <span style="color: #fff0ad; font-family: '<%=I18nUtil.t(" uni.font ") %>'; font-size: 12px; font-weight: normal; margin: 0 0 0 0;"><%=((PropertyPlaceholderRecorder) springContext.getBean(PropertyPlaceholderRecorder.class)).getProperty("projectName")%></span>
+  </div>
+  <div class="hoverShowInfo" style="background: url(images/head_right_bg.jpg) no-repeat right bottom;position: absolute;right:0;top:0;width: 400px; height: 36px;">
+    &nbsp;
+  </div>
+  <div id="rt_info_div" style="position: absolute; right: 20px; top: 9px;width:100%" class="subfloat">
+    <!-- logout -->
+    <span> <%
+  if (ClusterConfigServiceHelper.isClusterEnabled() && AuthTool.getAppSessionAttribute(request, ClusterConfigServiceHelper.getAppURI(request), true).get("cluster") != null){
+%> <a target="_blank"
+          style="color: #cde2ff; font-family: '<%=I18nUtil.t("uni.font") %>'; font-size: 12px;"
+          href="<c:url value="/clustermgr/login.jsp"/>"><%=I18nUtil.t("uni.login.platform") %></a> <%
+  }
+%> <a style="color: #cde2ff; font-family: '<%=I18nUtil.t("uni.font") %>'; font-size: 12px;"
+          href="<%=url_correct(request,"/authmgr/auth!logout.action")%>"><%=I18nUtil.t("uni.logout") %></a> </span>
+    <span style="color: #fff0ad; font-family: '<%=I18nUtil.t(" uni.font ") %>'; font-size: 14px;"><usr:name />
+        </span>
+
+    <span onmouseout="hiddenTip();" onmouseover="showTip();" style="color: #fff000; font-family: '<%=I18nUtil.t(" uni.font ") %>';cursor:help;font-size: 12px;font-weight: bold;"><%=I18nUtil.t("uni.license.detail") %>
+        </span>
+    <span style="color: #fff000; font-family: '<%=I18nUtil.t(" uni.font ") %>'; font-size: 12px;font-weight: bold;">${licenceExpireInXDay}
+        </span>
+    <a href="javascript:toggleNotificationDetail()">
+      <div id="notification_detail" style="background-color:#FFFFA0;font-weight:bold;border:1px solid grey;position:absolute;top:20px;color:red;display:none;z-index:100000;overflow:auto;height:200px;width:400px"></div>
+      <Marquee id="notification_compact" scrollamount="2" style="position:relative;top:5px;border-bottom:1px dotted #fff0ad;color: red; font-family: '<%=I18nUtil.t(" uni.font ") %>'; font-size: 14px;width:400px;height: 15px;line-height: 15px;display:none"></Marquee>
+    </a>
+    <span id="top_extra_menus">
+        </span>
+  </div>
+</div>

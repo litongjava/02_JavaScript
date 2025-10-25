@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>let相关例子</title>
+</head>
+
+<body>
+<button class="btn">按钮1</button>
+<button class="btn">按钮2</button>
+<button class="btn">按钮3</button>
+<button class="btn">按钮4</button>
+</body>
+<script src="js/jquery-2.1.0.js"></script>
+<script type="text/javascript">
+// 获取元素
+var btns = $(".btn");
+// 方法一：each遍历数组每一个索引(推荐使用)
+$.each(btns, function(i) {
+  btns.eq(i).click(function() {
+    console.log("采用each获取节点索引：" + i);
+  });
+})
+
+// 方法二：for循环采用闭包获取每个节点的索引
+for(var i = 0; i < btns.length; i++) {
+  (function(i) {
+    btns.eq(i).click(function() {
+      console.log("采用闭包获取节点索引：" + i);
+    })
+  })(i);
+}
+// 方法三：es6遍历索引
+for(let i = 0; i < btns.length; i++) {
+  btns.eq(i).click(function() {
+    console.log("采用es6获取节点索引：" + i)
+  });
+}
+
+// 方法四：原生js获取
+var btn = document.querySelectorAll(".btn");
+for(var i = 0; i < btn.length; i++) {
+  // 给每个btn索引值
+  btn[i].index = i;
+  btn[i].onclick = function() {
+    console.log("js遍历节点索引" + this.index)
+  }
+}
+</script>
+
+</html>

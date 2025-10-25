@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script type="text/javascript">
+function stringFormat() {
+  if (arguments.length == 0)
+    return null;
+  var str = arguments[0];
+  for (var i = 1; i < arguments.length; i++) {
+    var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
+    str = str.replace(re, arguments[i]);
+  }
+  return str;
+}
+var data1="001";
+var data2="002";
+var data3="003";
+var data4="004";
+var data5="005";
+var data6="006";
+var data7="007";
+var result=stringFormat("&Type={0}&Ro={1}&lPlan={2}&Plan={3}&={4}&Id={5}&Id={6}", data1, data2, data3,data4, data5,data6,data7);
+console.log(result);
+//&Type=001&Ro=002&lPlan=003&Plan=004&=005&Id=006&Id=007
+</script>
+</head>
+
+<body>
+</body>
+
+</html>

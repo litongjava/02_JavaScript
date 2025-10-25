@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>js正则表达式验证</title>
+		<script>
+			//1.定义正则表达式
+			var regex = /^1[3|5|8]{1}[0-9]{9}$/;
+			//2.使用正则表达式
+			var phone = "13121933622";
+			var bool = regex.test(phone)
+			//3.输入结果
+			console.log(bool);
+		</script>
+	</head>
+
+	<body>
+
+	</body>
+
+</html>

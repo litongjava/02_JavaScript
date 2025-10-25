@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+      document.onkeydown = function(evt) {
+        var VK_F9 = 120;
+        //兼容IE和Firefox获得keyBoardEvent对象
+        var evt = (evt) ? evt : ((window.event) ? window.event : "");
+        //兼容IE和Firefox获得keyBoardEvent对象的键值
+        var key = evt.keyCode ? evt.keyCode : evt.which;
+
+        if(evt.ctrlKey) {
+          if(appender.visible) {
+            appender.hide();
+            appender.visible = false;
+            log4javascript.setEnabled(false);
+          } else {
+            log4javascript.setEnabled(true);
+            appender.show();
+            appender.visible = true;
+          }
+        }
+      };
+    </script>
+  </head>
+
+  <body>
+  </body>
+
+</html>

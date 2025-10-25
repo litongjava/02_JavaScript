@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css" href="http://localhost:9100/extjs4/resources/css/ext-all.css" />
+<script src="http://localhost:9100/extjs4/ext-all-debug.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://localhost:9100/extjs4/locale/ext-lang-zh_CN.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+  Ext.define("my.awesome.class", {
+    someProperty: 'something',
+    someMethod: function(s) {
+      alert(s + "," + this.someProperty);
+    }
+  });
+  var obj = new my.awesome.class();
+  obj.someMethod("param");
+});
+</script>
+</head>
+
+<body>
+</body>
+
+</html>

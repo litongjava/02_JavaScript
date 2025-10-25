@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>event_01</title>
+<style type="text/css">
+.detail{
+  display: none;
+}
+.show{
+  display: block;
+}
+</style>
+</head>
+
+<body>
+<button class="nav">栏目1</button>
+<button class="nav">栏目2</button>
+<p class="detail show">内容1</p>
+<p class="detail">内容2</p>
+</body>
+<script type="text/javascript">
+var tab=document.querySelectorAll(".nav");
+var detail=document.querySelectorAll(".detail");
+for(var i=0;i<tab.length;i++){
+  tab[i].idx=i;
+  tab[i].onclick=function(){
+    for(var j=0;j<detail.length;j++){
+      console.log()
+      detail[j].classList.remove('show');
+    }
+    console.log(this)
+    detail[this.idx].classList.add('show')
+  }
+}
+</script>
+</html>

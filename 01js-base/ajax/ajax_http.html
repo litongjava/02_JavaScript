@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script type="text/javascript">
+//CORS通信和同源ajax通信没有区别，重点是子服务器端要设置可以允许跨域的自定义头
+const ajax = new XMLHttpRequest()
+ajax.open('post', 'http://192.168.99.128:10005/yangtze-river-collect/river/level/add?siteName=汉口站&time=2019/11/15 18:0:00&level=6.34', true)
+ajax.onreadystatechange = function() {
+  if(ajax.readyState === 4) {
+    if(ajax.status >= 200 && ajax.status < 300 || ajax.status === 304) {
+      alert(ajax.responseText)
+    }
+  }
+}
+ajax.send(null)
+</script>
+
+</html>
+</script>
+</head>
+
+<body>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>array-function-filter</title>
+	</head>
+	<body>
+	</body>
+  <script type="text/javascript">
+
+    var list=[];
+    //使用10次循环,产生10个对象,添加到list中
+    for(var i=0;i<10;i++){
+      list.push({name:'litong_'+i,age:i})
+    }
+    console.log(list.length);
+    document.innerHTML=list.length;
+    var newList=list.filter(function(item){
+      return item;
+    });
+    for(var i=0;i<newList;i++){
+      document.write(newList[i]);
+    }
+    
+  </script>
+</html>

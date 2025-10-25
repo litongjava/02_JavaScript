@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="log4javascript-1.4.13/log4javascript.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+      var log = log4javascript.getDefaultLogger()
+      var pageName = document.title;
+      log4javascript
+      log.trace(pageName, "我在这里加入了trace信息");
+      log.debug(pageName, "我在这里加入了debug信息");
+      log.info(pageName, "我在这里加入了info信息");
+      log.warn(pageName, "我在这里加入了warn信息");
+      log.error(pageName, "我在这里加入了error信息");
+      log.fatal(pageName, "我在这里加入了fatal信息");
+    </script>
+  </head>
+
+  <body>
+  </body>
+
+</html>
