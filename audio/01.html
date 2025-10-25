@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Audio seek demo</title></head>
+<body>
+<button id="btn">从第 10 秒开始播放</button>
+<script>
+    const audio = new Audio();
+    audio.src = "https://manimvideo.explanation.fun/tts/001.mp3";
+    audio.preload = "metadata";      // 帮助尽快拿到时长
+    document.body.appendChild(audio); // 可选：便于看见播放器
+
+    // 小工具：等待某个事件一次
+    function once(target, type) {
+        return new Promise(resolve => target.addEventListener(type, resolve, {once: true}));
+    }
+
+    document.getElementById('btn').addEventListener('click', async () => {
+        try {
+            // 1) 等到拿到元数据（若已拿到则跳过）
+            if (audio.readyState < 1) { // HAVE_METADATA === 1
+                await once(audio, 'loadedmetadata');
+            }
+
+            console.log('duration=', audio.duration);
+
+            // 2) 先开始播放（此时有用户手势，允许播放）
+            await audio.play();
+
+            // 3) 在可播放后再 seek 更稳（有些资源需要等到 canplay）
+            if (audio.readyState < 3) { // HAVE_FUTURE_DATA === 3
+                await once(audio, 'canplay');
+            }
+
+            // 4) 跳转到 10 秒（确保在时长范围内）
+            const target = Math.min(10, isFinite(audio.duration) ? audio.duration - 0.25 : 10);
+            audio.currentTime = target;
+
+            // 5) 可选：确认已完成跳转
+            await once(audio, 'seeked');
+            console.log('seeked to', audio.currentTime);
+        } catch (err) {
+            console.error('播放/跳转失败：', err);
+            alert('播放被阻止或资源不支持跳转。\n请检查：\n1) 是否通过按钮点击触发；\n2) 服务器是否支持 Range（206/Accept-Ranges）。');
+        }
+    });
+</script>
+</body>
+</html>

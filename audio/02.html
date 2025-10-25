@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>Audio seek demo</title></head>
+<body>
+<button id="btn">从第 10 秒开始播放</button>
+
+<script>
+  const audio = new Audio();
+  document.body.appendChild(audio);
+
+  const ttsUrl = "https://javalinux.explanation.fun/tts?input=我们认为下列真理不言而喻 : 人人生而平等，造物者赋予其若干不可剥夺的权利，包括生命权、自由权和追求幸福的权利；世间政府是为保障这些权利而建的，政府的正当权力来自于被治理者的认可；当任何政府形式危及这些目标时，人民就有权予以改变或废除并基于最有可能给他们带来安全与幸福的原则和权力分配形式建立新政府。的确，从慎重考虑，不应当由于轻微和短暂的原因而改变成立多年的政府。过去的一切经验也都说明，任何苦难，只要尚能忍受，人类都宁愿容忍，而无意废除他们久已习惯了的政府来恢复自身的权益。但是，当政府一贯滥用职权、强取豪夺，一成不变地追逐这一目标，足以证明它旨在把人民置于绝对专制统治之下时，那么，人民就有权利，也有义务推翻这个政府，并为他们未来的安全建立新的保障";
+
+  async function loadAudioByFetch() {
+    const res = await fetch(ttsUrl, { mode: "cors" }); // ⬅️ 需要服务器允许 CORS
+    const blob = await res.blob();
+    const localURL = URL.createObjectURL(blob);
+    audio.src = localURL;
+    console.log("音频已完整加载为本地 Blob");
+  }
+
+  document.getElementById('btn').addEventListener('click', async () => {
+    try {
+      await loadAudioByFetch();  // ✅ 先完整下载
+
+      await new Promise(res => {
+        audio.onloadedmetadata = res;  // ✅ 确保拿到时长
+        audio.load();
+      });
+
+      console.log('duration=', audio.duration);
+
+      await audio.play(); // ✅ 用户点击触发 → 不会被阻止
+
+      audio.currentTime = 10; // ✅ 任意跳转完全 OK
+      console.log('seeked to', audio.currentTime);
+
+    } catch (err) {
+      console.error('播放失败：', err);
+    }
+  });
+</script>
+
+</body>
+</html>
