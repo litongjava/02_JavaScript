@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Audio seek demo</title></head>
+<body>
+<button id="btn">从第 10 秒开始播放</button>
+<script>
+    //const ttsUrl = "http://127.0.0.1/tts?input=我们认为下列真理不言而喻 : 人人生而平等，造物者赋予其若干不可剥夺的权利，包括生命权、自由权和追求幸福的权利；世间政府是为保障这些权利而建的，政府的正当权力来自于被治理者的认可；当任何政府形式危及这些目标时，人民就有权予以改变或废除并基于最有可能给他们带来安全与幸福的原则和权力分配形式建立新政府。的确，从慎重考虑，不应当由于轻微和短暂的原因而改变成立多年的政府。过去的一切经验也都说明，任何苦难，只要尚能忍受，人类都宁愿容忍，而无意废除他们久已习惯了的政府来恢复自身的权益。但是，当政府一贯滥用职权、强取豪夺，一成不变地追逐这一目标，足以证明它旨在把人民置于绝对专制统治之下时，那么，人民就有权利，也有义务推翻这个政府，并为他们未来的安全建立新的保障";
+    const audio = new Audio();
+    audio.src = ttsUrl;
+    audio.preload = "metadata";      // 帮助尽快拿到时长
+    document.body.appendChild(audio); // 可选：便于看见播放器
+
+    // 小工具：等待某个事件一次
+    function once(target, type) {
+        return new Promise(resolve => target.addEventListener(type, resolve, {once: true}));
+    }
+
+    document.getElementById('btn').addEventListener('click', async () => {
+        try {
+            // 1) 等到拿到元数据（若已拿到则跳过）
+            if (audio.readyState < 1) { // HAVE_METADATA === 1
+                await once(audio, 'loadedmetadata');
+            }
+
+            console.log('duration=', audio.duration);
+
+            // 2) 先开始播放（此时有用户手势，允许播放）
+            await audio.play();
+
+            // 3) 在可播放后再 seek 更稳（有些资源需要等到 canplay）
+            if (audio.readyState < 3) { // HAVE_FUTURE_DATA === 3
+                await once(audio, 'canplay');
+            }
+
+            // 4) 跳转到 10 秒（确保在时长范围内）
+            const target = Math.min(10, isFinite(audio.duration) ? audio.duration - 0.25 : 10);
+            audio.currentTime = target;
+
+            // 5) 可选：确认已完成跳转
+            await once(audio, 'seeked');
+            console.log('seeked to', audio.currentTime);
+        } catch (err) {
+            console.error('播放/跳转失败：', err);
+            alert('播放被阻止或资源不支持跳转。\n请检查：\n1) 是否通过按钮点击触发；\n2) 服务器是否支持 Range（206/Accept-Ranges）。');
+        }
+    });
+</script>
+</body>
+</html>
